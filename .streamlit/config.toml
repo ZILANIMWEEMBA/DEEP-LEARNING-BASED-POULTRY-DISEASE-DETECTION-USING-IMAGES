@@ -1,0 +1,7 @@
+[client]
+showSidebarNavigation = false   # navigation is handled by frontend/app.py (role-based)
+[server]
+headless = true
+maxUploadSize = 5
+[browser]
+gatherUsageStats = false

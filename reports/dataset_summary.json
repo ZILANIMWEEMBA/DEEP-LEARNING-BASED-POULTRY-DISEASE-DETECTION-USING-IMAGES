@@ -1,0 +1,34 @@
+{
+  "source": "Kaggle",
+  "dataset": "kausthubkannan/poultry-diseases-detection",
+  "url": "https://www.kaggle.com/datasets/kausthubkannan/poultry-diseases-detection",
+  "note": "Check the dataset page for its licence and cite the original authors (Machuve et al.).",
+  "images_per_split_per_class": {
+    "train": {
+      "Healthy": 1437,
+      "Coccidiosis": 1379,
+      "Newcastle_Disease": 262,
+      "Salmonella": 1468
+    },
+    "validation": {
+      "Healthy": 308,
+      "Coccidiosis": 295,
+      "Newcastle_Disease": 56,
+      "Salmonella": 314
+    },
+    "test": {
+      "Healthy": 308,
+      "Coccidiosis": 295,
+      "Newcastle_Disease": 56,
+      "Salmonella": 314
+    }
+  },
+  "removed": {
+    "unreadable": 0,
+    "too_small": 0,
+    "exact_duplicates": 318,
+    "label_conflicts": 2
+  },
+  "near_duplicate_hamming_threshold": 3,
+  "split": "70/15/15, grouped by near-duplicates, seed 42"
+}

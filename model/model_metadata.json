@@ -1,0 +1,32 @@
+{
+  "model": "MobileNetV2",
+  "pretrained_weights": "imagenet",
+  "input_size": [
+    224,
+    224,
+    3
+  ],
+  "classes": [
+    "Healthy",
+    "Coccidiosis",
+    "Newcastle Disease",
+    "Salmonella"
+  ],
+  "framework": "TensorFlow/Keras 2.21.0",
+  "created_at": "2026-10-15T20:43:32.340424+00:00",
+  "random_seed": 42,
+  "dataset_size": 6492,
+  "training_samples": 4546,
+  "validation_samples": 973,
+  "test_samples": 973,
+  "num_classes": 4,
+  "training_epochs": 24,
+  "fine_tune_epochs": 13,
+  "best_validation_accuracy": 0.9578622579574585,
+  "final_validation_accuracy": 0.9516957998275757,
+  "test_accuracy": 0.9558067831449126,
+  "normalisation": "Rescaling(1/127.5, offset=-1) inside the model; input is RGB 0-255",
+  "version": "v20261015204332",
+  "trained_on": "Google Colab",
+  "data_source": "Kaggle"
+}
