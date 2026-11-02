@@ -1,6 +1,6 @@
 # Farmer manual
 1. **Register / log in** (Register page). 2. **My Poultry → Register new poultry** (type, breed, age in weeks, flock size).
-3. **Detect Disease**: choose poultry, upload a clear JPG/PNG photo (max 5 MB), add symptoms if any, press *Detect Disease*.
+3. **Detect Disease**: choose poultry, upload a clear JPG/PNG photo (max 20 MB), add symptoms if any, press *Detect Disease*.
 4. Read the result: predicted class, *model confidence* and probabilities. Remember: **this is not a diagnosis** and the
    care suggestion **is not a prescription**. If you see *Low-confidence AI prediction*, ask a veterinarian.
 5. Press **Request Veterinary Review** (every case is also queued automatically). Use **Veterinary Consultation** to chat.

@@ -21,7 +21,7 @@ def render() -> None:
         return
     opts = {f"{p['poultry_code']} – {p['poultry_type']} ({p['flock_size']})": p["poultry_id"] for p in poultry}
     chosen = st.selectbox("Select poultry", list(opts))
-    file = st.file_uploader("Upload a clear photo (JPG, JPEG or PNG, max 20 MB)", type=["jpg", "jpeg", "png"])
+    file = st.file_uploader("Upload a clear photo (JPG, JPEG or PNG, MAX 20 MB)", type=["jpg", "jpeg", "png"])
     symptoms = st.text_area("Symptoms you noticed (optional)", placeholder="e.g. bloody droppings, not eating")
     obs = st.text_area("Other observations (optional)")
     valid = False

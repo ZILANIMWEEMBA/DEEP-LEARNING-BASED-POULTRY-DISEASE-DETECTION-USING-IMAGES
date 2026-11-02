@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+HEAD
 # DEEP-LEARNING-BASED-POULTRY-DISEASE-DETECTION-USING-IMAGES
 Deep learning-based system that uses image recognition and Convolutional Neural Networks (CNNs) to detect poultry diseases.  The system allows farmers to upload poultry images and receive disease predictions, confidence scores, and basic care guidance.
-=======
+
 # Deep Learning-Based Poultry Disease Detection Using Image Recognition
 *AI-Assisted Poultry Health Management and Veterinary Support System*
 
@@ -145,4 +145,4 @@ records); antibiotics are never suggested by name/dose by the AI; audit trail; d
 ## Future Improvements
 More diseases, Grad-CAM, object detection/lesion localisation, Android app, offline/edge inference, SMS/WhatsApp,
 multilingual UI, lab-result integration, outbreak surveillance, PostgreSQL/cloud deployment.
->>>>>>> 456dbf0 (PoultryDx AI: poultry disease detection system)
+ 456dbf0 (PoultryDx AI: poultry disease detection system)

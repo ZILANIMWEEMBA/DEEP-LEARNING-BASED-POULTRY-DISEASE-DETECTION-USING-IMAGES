@@ -60,7 +60,7 @@ flowchart LR
 |---|---|---|
 | Register | name, email, password, phone, location, licence (vets) | email format; password ≥ 8 with letters+digits/symbols; vets need licence |
 | Poultry | type, breed, age (weeks), flock size, production, health history | flock ≥ 1, age 0–500 |
-| Detect Disease | poultry, image, symptoms, observations | JPG/JPEG/PNG, ≤ 5 MB, ≥ 64 px, real image content |
+| Detect Disease | poultry, image, symptoms, observations | JPG/JPEG/PNG, ≤ 20 MB, ≥ 64 px, real image content |
 | Veterinary review | diagnosis, assessment, treatment, medication, dosage, frequency, duration, instructions, follow-up, comments | prescription needs dosage+frequency+duration; "confirmed" must equal AI class |
 
 ## 6. AI report generation flowchart

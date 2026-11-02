@@ -85,10 +85,8 @@ class PoultryPredictor:
 def build_result(probs: np.ndarray) -> dict:
     """Convert a probability vector (canonical class order) into the API result.
 
-    The app should never report a diagnosis when the model output is still
-    ambiguous. A healthy image should end up with a dominant winner and all other
-    classes should be much smaller; weak distributions are rejected so the user is
-    not shown a false disease label.
+    Ambiguous outputs remain available for veterinary review, but are marked so
+    the app can show its low-confidence warning.
     """
     probs = np.asarray(probs, dtype="float64")
     if probs.shape != (len(CLASS_NAMES),) or not np.isclose(probs.sum(), 1.0, atol=1e-3):
@@ -96,14 +94,12 @@ def build_result(probs: np.ndarray) -> dict:
 
     top = float(probs.max())
     runner_up = float(np.partition(probs, -2)[-2])
-    if top >= 0.45 and runner_up >= 0.20 and (top - runner_up) <= 0.25:
-        raise PredictionFailure(
-            "Model output is not a clear winner. Please retrain with cleaner data or use a clearer image."
-        )
+    ambiguous = top >= 0.45 and runner_up >= 0.20 and (top - runner_up) <= 0.25
 
     idx = int(np.argmax(probs))
     return {
         "predicted_class": CLASS_NAMES[idx],
         "confidence": float(probs[idx]),
         "probabilities": {name: float(probs[i]) for i, name in enumerate(CLASS_NAMES)},
+        "ambiguous": ambiguous,
     }

@@ -28,7 +28,7 @@ STATUS_LABELS = {
 
 
 def poultry_code(poultry_id: int) -> str:
-    return f"POULTRY-{poultry_id:05d}"
+    return f"POULTRY-{poultry_id:0d}"
 
 
 def disease_info(db: Session, name: str) -> dict:

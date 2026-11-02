@@ -37,9 +37,11 @@ def test_build_result_requires_a_clear_winner():
     r = build_result(np.array([0.90, 0.04, 0.03, 0.03]))
     assert r["predicted_class"] == "Healthy"
     assert r["confidence"] == pytest.approx(0.90)
+    assert r["ambiguous"] is False
     assert all(v <= 0.05 for k, v in r["probabilities"].items() if k != "Healthy")
-    with pytest.raises(PredictionFailure):
-        build_result(np.array([0.14, 0.47, 0.26, 0.13]))
+    ambiguous = build_result(np.array([0.14, 0.47, 0.26, 0.13]))
+    assert ambiguous["predicted_class"] == "Coccidiosis"
+    assert ambiguous["ambiguous"] is True
 
 
 def test_build_result_rejects_bad_distribution():

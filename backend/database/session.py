@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Iterator
 
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine, event, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
@@ -60,6 +60,22 @@ def new_session() -> Session:
     return _SessionLocal()
 
 
+def _ensure_legacy_sqlite_migration() -> None:
+    if not settings().database_url.startswith("sqlite"):
+        return
+    engine = get_engine()
+    with engine.begin() as conn:
+        table_exists = conn.execute(
+            text("SELECT 1 FROM sqlite_master WHERE type='table' AND name='uploaded_images'")
+        ).scalar()
+        if not table_exists:
+            return
+        columns = [row[1] for row in conn.execute(text("PRAGMA table_info(uploaded_images)")).all()]
+        if "sha256" not in columns and "sha26" in columns:
+            conn.execute(text("ALTER TABLE uploaded_images RENAME COLUMN sha26 TO sha256"))
+
+
 def init_db() -> None:
     from backend.models import models  # noqa: F401  (register tables)
     Base.metadata.create_all(bind=get_engine())
+    _ensure_legacy_sqlite_migration()

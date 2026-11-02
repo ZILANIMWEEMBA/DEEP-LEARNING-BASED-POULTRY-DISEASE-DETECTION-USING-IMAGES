@@ -45,7 +45,7 @@ def create_prediction(db: Session, user: User, poultry: Poultry, data: bytes, fi
         predicted_class=result["predicted_class"], confidence=result["confidence"],
         healthy_prob=probs["Healthy"], coccidiosis_prob=probs["Coccidiosis"],
         newcastle_prob=probs["Newcastle Disease"], salmonella_prob=probs["Salmonella"],
-        low_confidence=result["confidence"] < cfg.confidence_threshold,
+        low_confidence=(result["confidence"] < cfg.confidence_threshold or result["ambiguous"]),
         symptoms=(symptoms or None), farmer_observations=(observations or None),
         status="Pending Review", model_version=predictor.version)
     db.add(pred)

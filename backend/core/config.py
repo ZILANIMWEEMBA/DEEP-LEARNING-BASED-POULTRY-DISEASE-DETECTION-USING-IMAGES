@@ -60,7 +60,7 @@ class Settings:
     model_metadata_path: Path = field(default_factory=lambda: _path(os.getenv("MODEL_METADATA_PATH", "./model/model_metadata.json")))
     upload_dir: Path = field(default_factory=lambda: _path(os.getenv("UPLOAD_DIR", "./uploads")))
     reports_dir: Path = field(default_factory=lambda: _path("./reports"))
-    max_upload_bytes: int = field(default_factory=lambda: int(float(os.getenv("MAX_UPLOAD_MB", "5")) * 1024 * 1024))
+    max_upload_bytes: int = field(default_factory=lambda: int(float(os.getenv("MAX_UPLOAD_MB", "20")) * 1024 * 1024))
     confidence_threshold: float = field(default_factory=lambda: float(os.getenv("CONFIDENCE_THRESHOLD", "0.60")))
     allowed_extensions: tuple[str, ...] = (".jpg", ".jpeg", ".png")
     min_image_side: int = 64

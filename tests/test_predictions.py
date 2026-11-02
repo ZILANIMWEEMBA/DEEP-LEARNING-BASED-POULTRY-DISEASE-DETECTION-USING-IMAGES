@@ -47,6 +47,21 @@ def test_low_confidence(client, farmer, poultry_id):
     assert "Veterinary assessment is strongly recommended" in d["low_confidence_message"]
 
 
+def test_ambiguous_prediction_is_saved_for_veterinary_review(client, farmer, poultry_id):
+    from backend.main import app
+    from backend.services.model_service import get_predictor
+    from tests.conftest import StubPredictor
+    app.dependency_overrides[get_predictor] = lambda: StubPredictor((0.603, 0.397, 0.0, 0.0))
+
+    r = upload(client, farmer, poultry_id)
+    assert r.status_code == 201, r.text
+    d = r.json()
+    assert d["predicted_class"] == "Healthy"
+    assert d["low_confidence"] is True
+    assert "Veterinary assessment is strongly recommended" in d["low_confidence_message"]
+    assert d["status_label"] == "Pending Veterinary Review"
+
+
 def test_invalid_uploads_rejected(client, farmer, poultry_id):
     assert upload(client, farmer, poultry_id, b"hello", "x.jpg").status_code == 400          # unreadable
     assert upload(client, farmer, poultry_id, make_image(), "x.gif").status_code == 400       # extension

@@ -35,4 +35,4 @@ def register_handlers(app: FastAPI) -> None:
     @app.exception_handler(Exception)
     async def unhandled(_: Request, exc: Exception):
         log.error("unhandled error", exc_info=exc)
-        return JSONResponse(status_code=500, content={"detail": "An unexpected error occurred.", "code": "internal_error"})
+        return JSONResponse(status_code=00, content={"detail": "An unexpected error occurred.", "code": "internal_error"})

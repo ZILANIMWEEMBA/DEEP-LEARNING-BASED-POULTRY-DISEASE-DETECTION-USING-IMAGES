@@ -19,11 +19,11 @@ class User(Base):
     user_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     full_name: Mapped[str] = mapped_column(String(120))
     role: Mapped[str] = mapped_column(String(20), index=True)  # farmer|veterinarian|admin
-    email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    email: Mapped[str] = mapped_column(String(2), unique=True, index=True)
     contact_number: Mapped[str | None] = mapped_column(String(30), nullable=True)
-    location: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    location: Mapped[str | None] = mapped_column(String(2), nullable=True)
     license_number: Mapped[str | None] = mapped_column(String(100), nullable=True)  # vets only
-    password_hash: Mapped[str] = mapped_column(String(255))
+    password_hash: Mapped[str] = mapped_column(String(2))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow, onupdate=utcnow)
@@ -35,11 +35,11 @@ class Poultry(Base):
     __tablename__ = "poultry"
     poultry_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.user_id", ondelete="CASCADE"), index=True)
-    poultry_type: Mapped[str] = mapped_column(String(50))  # chicken, duck, ...
+    poultry_type: Mapped[str] = mapped_column(String(0))  # chicken, duck, ...
     breed: Mapped[str | None] = mapped_column(String(100), nullable=True)
     age: Mapped[int | None] = mapped_column(Integer, nullable=True)  # weeks
     flock_size: Mapped[int] = mapped_column(Integer, default=1)
-    production_type: Mapped[str | None] = mapped_column(String(50), nullable=True)  # layer/broiler/...
+    production_type: Mapped[str | None] = mapped_column(String(0), nullable=True)  # layer/broiler/...
     health_history: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
@@ -67,7 +67,7 @@ class PredictionHistory(Base):
     poultry_id: Mapped[int] = mapped_column(ForeignKey("poultry.poultry_id", ondelete="CASCADE"), index=True)
     image_id: Mapped[int | None] = mapped_column(ForeignKey("uploaded_images.image_id"), nullable=True)
     image_filename: Mapped[str] = mapped_column(String(100))
-    predicted_class: Mapped[str] = mapped_column(String(50), index=True)
+    predicted_class: Mapped[str] = mapped_column(String(0), index=True)
     confidence: Mapped[float] = mapped_column(Float)
     healthy_prob: Mapped[float] = mapped_column(Float)
     coccidiosis_prob: Mapped[float] = mapped_column(Float)
@@ -76,7 +76,7 @@ class PredictionHistory(Base):
     low_confidence: Mapped[bool] = mapped_column(Boolean, default=False)
     symptoms: Mapped[str | None] = mapped_column(Text, nullable=True)
     farmer_observations: Mapped[str | None] = mapped_column(Text, nullable=True)
-    status: Mapped[str] = mapped_column(String(50), default="Pending Review", index=True)
+    status: Mapped[str] = mapped_column(String(0), default="Pending Review", index=True)
     assigned_vet_id: Mapped[int | None] = mapped_column(ForeignKey("users.user_id"), nullable=True, index=True)
     model_version: Mapped[str | None] = mapped_column(String(100), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow, index=True)
@@ -87,7 +87,7 @@ class PredictionHistory(Base):
 
     @property
     def case_id(self) -> str:
-        return f"CASE-{self.prediction_id:05d}"
+        return f"CASE-{self.prediction_id:0d}"
 
 
 class VeterinaryReview(Base):
@@ -99,10 +99,10 @@ class VeterinaryReview(Base):
     diagnosis_action: Mapped[str] = mapped_column(String(20))  # confirmed | revised
     clinical_assessment: Mapped[str | None] = mapped_column(Text, nullable=True)
     treatment_plan: Mapped[str | None] = mapped_column(Text, nullable=True)
-    prescription: Mapped[str | None] = mapped_column(String(255), nullable=True)  # medication name
-    dosage: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    frequency: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    duration: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    prescription: Mapped[str | None] = mapped_column(String(2), nullable=True)  # medication name
+    dosage: Mapped[str | None] = mapped_column(String(2), nullable=True)
+    frequency: Mapped[str | None] = mapped_column(String(2), nullable=True)
+    duration: Mapped[str | None] = mapped_column(String(2), nullable=True)
     additional_instructions: Mapped[str | None] = mapped_column(Text, nullable=True)
     follow_up_date: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     license_info: Mapped[str | None] = mapped_column(String(100), nullable=True)
@@ -116,8 +116,8 @@ class VeterinaryReview(Base):
 class DiseaseKnowledge(Base):
     __tablename__ = "disease_knowledge"
     disease_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    disease_name: Mapped[str] = mapped_column(String(50), unique=True)
-    category: Mapped[str] = mapped_column(String(50))
+    disease_name: Mapped[str] = mapped_column(String(0), unique=True)
+    category: Mapped[str] = mapped_column(String(0))
     description: Mapped[str] = mapped_column(Text)
     reference_symptoms: Mapped[str] = mapped_column(Text)  # newline-separated
     general_care: Mapped[str] = mapped_column(Text)
@@ -130,7 +130,7 @@ class MedicationReference(Base):
     __tablename__ = "medication_reference"
     medication_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     disease_class: Mapped[str] = mapped_column(ForeignKey("disease_knowledge.disease_name"), index=True)
-    medicine_name: Mapped[str] = mapped_column(String(150))
+    medicine_name: Mapped[str] = mapped_column(String(10))
     category: Mapped[str] = mapped_column(String(100))
     usage_notes: Mapped[str] = mapped_column(Text)  # general info only - NO dosage
 
