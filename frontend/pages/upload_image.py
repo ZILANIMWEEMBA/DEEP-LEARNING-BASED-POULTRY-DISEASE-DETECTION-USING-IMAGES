@@ -45,6 +45,11 @@ def render() -> None:
                 res = api.upload_prediction(opts[chosen], file.name, file.getvalue(),
                                             file.type or "image/jpeg", symptoms, obs)
             except api.ApiError as e:
-                st.error(e.message)
+                st.error(f"Image upload failed (HTTP {e.status}): {e.message}")
+                if e.status == 403:
+                    st.info(
+                        "Image uploads require a farmer account. Check the role shown in your profile; "
+                        "if it should be Farmer, ask an administrator to correct the account role."
+                    )
                 return
         nav_to("prediction", selected_prediction=res["prediction_id"])
